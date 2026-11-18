@@ -13,7 +13,8 @@ return new class extends Migration
             // Unconstrained, as on chat_conversations: an unattributable row stays unstamped.
             $table->unsignedBigInteger('store_id')->nullable()->index();
             $table->unsignedBigInteger('team_id')->nullable()->index();
-            $table->string('name', 100);
+            $table->string('first_name', 100);
+            $table->string('last_name', 100);
             $table->string('email', 254);
             $table->string('subject', 150)->nullable();
             $table->text('message');
