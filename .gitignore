@@ -1,11 +1,16 @@
 /vendor/
 /modules/module-manager/
 /modules/module-manager-filament/
+/modules/affiliate-*/
+/modules/passkeys/
+/modules/payment-*/
+/modules/shipping-*/
 /modules/ecommerce-*/
 !/modules/ecommerce-printful/
 !/modules/ecommerce-dropxl/
 /modules/fixture-*/
 /themes/fixture-*/
+__pycache__/
 node_modules/
 npm-debug.log
 yarn-error.log

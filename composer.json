@@ -1,21 +1,19 @@
 {
     "name": "liberusoftware/ecommerce-laravel",
     "type": "project",
-    "description": "Liberu Ecommerce — an open-source e-commerce platform built on Laravel, Filament and Livewire.",
+    "description": "Liberu Ecommerce \u2014 an open-source e-commerce platform built on Laravel, Filament and Livewire.",
     "keywords": [
         "laravel",
         "framework"
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.5",
         "bezhansalleh/filament-shield": "^4.3.1",
         "biostate/filament-menu-builder": "^5.1.0",
         "bursteri/socialstream": "^7.0.0",
         "filament/filament": "^5.11.0",
         "filament/spatie-laravel-settings-plugin": "^5.11.0",
         "guzzlehttp/guzzle": "^8.5",
-        "laravel/cashier": "^16.9.0",
         "laravel/framework": "^13.38.0",
         "laravel/horizon": "^5.50.1",
         "laravel/jetstream": "^5.5.3",
@@ -23,20 +21,41 @@
         "laravel/reverb": "^1.12.0",
         "laravel/sanctum": "^4.3.3",
         "laravel/tinker": "^3.0.2",
+        "liberusoftware/affiliate-contracts": "^1.0",
+        "liberusoftware/affiliate-core": "^1.0",
         "liberusoftware/composer-installer": "^1.1",
         "liberusoftware/ecommerce-contracts": "^1.2",
         "liberusoftware/ecommerce-dropxl": "^0.1",
         "liberusoftware/ecommerce-printful": "^0.2",
-        "liberusoftware/module-manager": "^1.9",
-        "liberusoftware/module-manager-filament": "^1.11",
+        "liberusoftware/module-manager": "^1.9.2",
+        "liberusoftware/module-manager-filament": "^1.11.2",
+        "liberusoftware/passkeys": "^1.0",
+        "liberusoftware/payment-adyen": "^1.0",
+        "liberusoftware/payment-contracts": "^1.0",
+        "liberusoftware/payment-core": "^1.0",
+        "liberusoftware/payment-gocardless": "^1.0",
+        "liberusoftware/payment-mollie": "^1.0",
+        "liberusoftware/payment-paddle": "^1.0",
+        "liberusoftware/payment-paypal": "^1.0",
+        "liberusoftware/payment-square": "^1.0",
+        "liberusoftware/payment-stripe": "^1.0",
+        "liberusoftware/shipping-contracts": "^1.0",
+        "liberusoftware/shipping-core": "^1.0",
+        "liberusoftware/shipping-dhl": "^1.0",
+        "liberusoftware/shipping-easypost": "^1.0",
+        "liberusoftware/shipping-fedex": "^1.0",
+        "liberusoftware/shipping-royalmail": "^1.0",
+        "liberusoftware/shipping-shipengine": "^1.0",
+        "liberusoftware/shipping-shippo": "^1.0",
+        "liberusoftware/shipping-ups": "^1.0",
         "liberusoftware/tenancy": "^1.0.1",
         "liberusoftware/users-roles": "^1.0",
         "livewire/livewire": "^4.4.8",
         "orangehill/iseed": "^3.8.1",
+        "php": "^8.5",
         "spatie/laravel-menu": "^4.2.2",
         "spatie/laravel-permission": "^8.3.2",
         "spatie/laravel-query-builder": "^7.3.7",
-        "srmklive/paypal": "^3.2.0",
         "webonyx/graphql-php": "^15.39.0"
     },
     "require-dev": {
@@ -99,6 +118,18 @@
     "extra": {
         "laravel": {
             "dont-discover": [
+                "liberusoftware/affiliate-contracts",
+                "liberusoftware/affiliate-core",
+                "liberusoftware/passkeys",
+                "liberusoftware/payment-adyen",
+                "liberusoftware/payment-contracts",
+                "liberusoftware/payment-core",
+                "liberusoftware/payment-gocardless",
+                "liberusoftware/payment-mollie",
+                "liberusoftware/payment-paddle",
+                "liberusoftware/payment-paypal",
+                "liberusoftware/payment-square",
+                "liberusoftware/payment-stripe",
                 "liberusoftware/tenancy",
                 "liberusoftware/users-roles"
             ]
@@ -128,5 +159,168 @@
     "support": {
         "issues": "https://github.com/liberusoftware/project-ecommerce-laravel-filament/issues",
         "source": "https://github.com/liberusoftware/project-ecommerce-laravel-filament"
-    }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/module-module-manager-filament.git",
+            "only": [
+                "liberusoftware/module-manager-filament"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/module-module-manager.git",
+            "only": [
+                "liberusoftware/module-manager"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/payment-contracts.git",
+            "only": [
+                "liberusoftware/payment-contracts"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/payment-core.git",
+            "only": [
+                "liberusoftware/payment-core"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/payment-stripe.git",
+            "only": [
+                "liberusoftware/payment-stripe"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/payment-paypal.git",
+            "only": [
+                "liberusoftware/payment-paypal"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/payment-paddle.git",
+            "only": [
+                "liberusoftware/payment-paddle"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/payment-adyen.git",
+            "only": [
+                "liberusoftware/payment-adyen"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/payment-mollie.git",
+            "only": [
+                "liberusoftware/payment-mollie"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/payment-square.git",
+            "only": [
+                "liberusoftware/payment-square"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/payment-gocardless.git",
+            "only": [
+                "liberusoftware/payment-gocardless"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/affiliate-contracts.git",
+            "only": [
+                "liberusoftware/affiliate-contracts"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/affiliate-core.git",
+            "only": [
+                "liberusoftware/affiliate-core"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/passkeys.git",
+            "only": [
+                "liberusoftware/passkeys"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/shipping-contracts.git",
+            "only": [
+                "liberusoftware/shipping-contracts"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/shipping-core.git",
+            "only": [
+                "liberusoftware/shipping-core"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/shipping-dhl.git",
+            "only": [
+                "liberusoftware/shipping-dhl"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/shipping-easypost.git",
+            "only": [
+                "liberusoftware/shipping-easypost"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/shipping-fedex.git",
+            "only": [
+                "liberusoftware/shipping-fedex"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/shipping-royalmail.git",
+            "only": [
+                "liberusoftware/shipping-royalmail"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/shipping-shipengine.git",
+            "only": [
+                "liberusoftware/shipping-shipengine"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/shipping-shippo.git",
+            "only": [
+                "liberusoftware/shipping-shippo"
+            ]
+        },
+        {
+            "type": "git",
+            "url": "https://github.com/liberusoftware/shipping-ups.git",
+            "only": [
+                "liberusoftware/shipping-ups"
+            ]
+        }
+    ]
 }
