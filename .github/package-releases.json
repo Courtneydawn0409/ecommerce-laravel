@@ -17,10 +17,18 @@
   },
   "liberusoftware/tenancy": {
     "path": "modules/tenancy",
-    "reference": "5c079502cf9c82c304f37eab141c8c7d5a77b2b7",
+    "reference": "9c107d1e47b0e164cd297a5537255e61e99d8c07",
     "repository": "https://github.com/liberusoftware/module-tenancy",
-    "source_signature": "d469d350ee02b7822a5fa89a3d1bcf1bbd06fa4f8e46fc06e6644ffc88c0b8e5",
-    "source_tree": "04f69949afdcdb6c12817d536fee1706df06aa5d",
-    "version": "1.2.2"
+    "source_signature": "d9e8e8c885552ad3d292100622661bddde26dbc9493c784121ecc6b6b689dfa5",
+    "source_tree": "2ea9dca4c6a909850f2eb066ca389824490ff9fa",
+    "version": "1.2.3"
+  },
+  "liberusoftware/users-roles": {
+    "path": "modules/users-roles",
+    "reference": "4aa49df470411bdea1f54abd1a6e76c6173b68d9",
+    "repository": "https://github.com/liberusoftware/module-users-roles",
+    "source_signature": "96033d42d8fc17173e90e6666fb0019d2b232b7ff059b4f520990da2fd7047bc",
+    "source_tree": "65cfb9174db082b10ff8e929ec58bad5d6f414f3",
+    "version": "1.0.3"
   }
 }
