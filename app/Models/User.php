@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Gate;
 use JoelButcher\Socialstream\HasConnectedAccounts;
-use Laravel\Cashier\Billable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
@@ -28,7 +27,6 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser, HasDefaultTenant, HasTenants
 {
-    use Billable;
     use HasApiTokens;
     use HasConnectedAccounts;
     use HasFactory;

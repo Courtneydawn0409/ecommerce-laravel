@@ -1,30 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\PaymentGateways;
 
 use App\Interfaces\PaymentGatewayInterface;
-use Srmklive\PayPal\Services\PayPal as PayPalClient;
+use App\Support\Money;
+use Liberu\Payment\Contracts\DTOs\CapturePaymentCommand;
+use Liberu\Payment\Contracts\DTOs\MerchantAccountContextDto;
+use Liberu\Payment\Contracts\DTOs\MoneyAmount;
+use Liberu\Payment\Contracts\DTOs\RefundPaymentCommand;
+use Liberu\Payment\Core\Services\PaymentOrchestrator;
 use Throwable;
 
-/**
- * PayPal gateway on the maintained srmklive/paypal SDK (PayPal Orders v2 REST API).
- * Replaces the abandoned paypal/rest-api-sdk-php (PayPal\Api\*, v1) the class used to
- * construct in its ctor — which fataled on instantiation once that package was gone.
- */
 class PayPalGateway implements PaymentGatewayInterface
 {
-    private ?PayPalClient $provider = null;
+    public function __construct(private readonly PaymentOrchestrator $orchestrator) {}
 
-    /** Inject a preconfigured client (used in tests). */
-    public function setProvider(PayPalClient $provider): void
-    {
-        $this->provider = $provider;
-    }
-
-    /**
-     * Capture a PayPal order the buyer already created + approved client-side. The
-     * order id arrives as $paymentDetails['payment_id'] (see CheckoutController).
-     */
     public function processPayment(float $amount, array $paymentDetails): array
     {
         $orderId = $paymentDetails['payment_id'] ?? null;
@@ -33,17 +25,25 @@ class PayPalGateway implements PaymentGatewayInterface
         }
 
         try {
-            $result = $this->provider()->capturePaymentOrder($orderId);
+            $result = $this->orchestrator->capture(new CapturePaymentCommand(
+                account: new MerchantAccountContextDto(
+                    tenantId: (string) ($paymentDetails['tenant_id'] ?? 'default'),
+                    providerKey: 'paypal',
+                    credentials: [
+                        'client_id' => (string) config('services.paypal.client_id'),
+                        'secret' => (string) config('services.paypal.secret'),
+                    ],
+                ),
+                providerIntentId: (string) $orderId,
+                idempotencyKey: 'paypal_cap_'.$orderId,
+                amount: new MoneyAmount((int) round($amount * 100), Money::currency()),
+            ));
 
-            if (($result['status'] ?? null) === 'COMPLETED') {
-                return [
-                    'success' => true,
-                    'transaction_id' => $this->captureId($result) ?? $orderId,
-                    'status' => 'COMPLETED',
-                ];
-            }
-
-            return ['success' => false, 'error' => 'PayPal capture not completed', 'status' => $result['status'] ?? 'unknown'];
+            return [
+                'success' => true,
+                'transaction_id' => $result->providerCaptureId,
+                'status' => 'COMPLETED',
+            ];
         } catch (Throwable $e) {
             return ['success' => false, 'error' => $e->getMessage()];
         }
@@ -52,13 +52,21 @@ class PayPalGateway implements PaymentGatewayInterface
     public function refundPayment(string $transactionId, float $amount): array
     {
         try {
-            $result = $this->provider()->refundCapturedPayment($transactionId, $transactionId, $amount, 'Order refund');
+            $result = $this->orchestrator->refund(new RefundPaymentCommand(
+                account: new MerchantAccountContextDto(
+                    tenantId: 'default',
+                    providerKey: 'paypal',
+                    credentials: [
+                        'client_id' => (string) config('services.paypal.client_id'),
+                        'secret' => (string) config('services.paypal.secret'),
+                    ],
+                ),
+                providerReference: $transactionId,
+                amount: new MoneyAmount((int) round($amount * 100), Money::currency()),
+                idempotencyKey: 'paypal_ref_'.$transactionId.'_'.(int) round($amount * 100),
+            ));
 
-            if (($result['status'] ?? null) === 'COMPLETED') {
-                return ['success' => true, 'refund_id' => $result['id'] ?? null, 'status' => 'COMPLETED'];
-            }
-
-            return ['success' => false, 'error' => 'Refund not completed', 'status' => $result['status'] ?? 'unknown'];
+            return ['success' => true, 'refund_id' => $result->providerRefundId, 'status' => 'COMPLETED'];
         } catch (Throwable $e) {
             return ['success' => false, 'error' => $e->getMessage()];
         }
@@ -66,27 +74,6 @@ class PayPalGateway implements PaymentGatewayInterface
 
     public function processSubscription(string $planId, array $subscriptionDetails): array
     {
-        // ponytail: real PayPal subscriptions need a billing plan provisioned via the
-        // Subscriptions API first; not wired. Return an honest failure rather than the
-        // fake uniqid() "success" the old stub returned.
-        return ['success' => false, 'error' => 'PayPal subscriptions are not implemented.'];
-    }
-
-    private function provider(): PayPalClient
-    {
-        if ($this->provider === null) {
-            $provider = new PayPalClient;
-            $provider->setApiCredentials(config('paypal'));
-            $provider->getAccessToken();
-            $this->provider = $provider;
-        }
-
-        return $this->provider;
-    }
-
-    /** Pull the capture id out of the Orders-v2 capture response. */
-    private function captureId(array $result): ?string
-    {
-        return $result['purchase_units'][0]['payments']['captures'][0]['id'] ?? null;
+        return ['success' => false, 'error' => 'PayPal subscriptions are managed through liberusoftware/payment-core.'];
     }
 }
